@@ -53,17 +53,35 @@ export async function onRequestGet(context) {
 (function() {
   var token = ${JSON.stringify(token)};
   var provider = ${JSON.stringify(provider)};
-  var data = { token: token, provider: provider };
-  var msg = 'authorization:' + provider + ':success:' + JSON.stringify(data);
   var status = document.getElementById('status');
 
-  if (window.opener) {
-    window.opener.postMessage(msg, '*');
-    status.textContent = 'Token sent. Closing in 5s...';
-    setTimeout(function() { window.close(); }, 5000);
-  } else {
-    status.textContent = 'No opener window found. Copy token manually: ' + token.substring(0, 8) + '...';
+  if (!window.opener) {
+    status.textContent = 'No opener window. Close this and try again.';
+    return;
   }
+
+  function sendToken(e) {
+    window.removeEventListener('message', sendToken);
+    var data = { token: token, provider: provider };
+    var msg = 'authorization:' + provider + ':success:' + JSON.stringify(data);
+    window.opener.postMessage(msg, e.origin);
+    status.textContent = 'Authorized! Closing...';
+    setTimeout(function() { window.close(); }, 1000);
+  }
+
+  window.addEventListener('message', sendToken, false);
+  window.opener.postMessage('authorizing:' + provider, '*');
+  status.textContent = 'Waiting for CMS handshake...';
+
+  setTimeout(function() {
+    if (status.textContent.indexOf('Waiting') === 0) {
+      status.textContent = 'Handshake timeout — sending token directly...';
+      var data = { token: token, provider: provider };
+      var msg = 'authorization:' + provider + ':success:' + JSON.stringify(data);
+      window.opener.postMessage(msg, '*');
+      setTimeout(function() { window.close(); }, 2000);
+    }
+  }, 3000);
 })();
 </script>
 </body></html>`,
