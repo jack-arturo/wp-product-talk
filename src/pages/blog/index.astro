@@ -1,0 +1,118 @@
+---
+import Layout from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<Layout
+  title="Blog · WP Product Talk"
+  description="Articles, show notes, and insights from the WP Product Talk team and the WordPress product community."
+>
+  <!-- Page Header -->
+  <section style="background: linear-gradient(180deg, #0c1220 0%, #0f172a 100%); border-bottom: 1px solid #1e293b;" class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-sm font-semibold uppercase tracking-wider mb-2" style="color: #f59e0b;">The Blog</p>
+      <h1 class="text-4xl font-extrabold mb-3" style="color: #f1f5f9;">Articles &amp; Insights</h1>
+      <p class="text-base" style="color: #64748b;">
+        Written content from the WP Product Talk team — episode summaries, deep dives, and community perspectives.
+      </p>
+    </div>
+  </section>
+
+  <!-- Posts -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {sortedPosts.length > 0 ? (
+      <div class="space-y-6">
+        {sortedPosts.map((post) => {
+          const dateStr = new Date(post.data.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          });
+          return (
+            <a
+              href={`/blog/${post.id}/`}
+              class="group block rounded-2xl p-6 transition-all duration-200"
+              style="background-color: #1e293b; border: 1px solid #334155;"
+              onmouseover="this.style.borderColor='#f59e0b'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 32px rgba(0,0,0,0.3)'"
+              onmouseout="this.style.borderColor='#334155'; this.style.transform='translateY(0)'; this.style.boxShadow='none'"
+            >
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-2 mb-3">
+                  {post.data.tags.map((tag: string) => (
+                    <span
+                      class="text-xs font-medium px-2.5 py-1 rounded-full"
+                      style="background-color: #f59e0b15; color: #f59e0b; border: 1px solid #f59e0b30;"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <h2
+                class="text-xl font-bold mb-2 transition-colors duration-150 group-hover:text-amber-400"
+                style="color: #f1f5f9;"
+              >
+                {post.data.title}
+              </h2>
+
+              <p class="text-sm leading-relaxed mb-4" style="color: #94a3b8;">
+                {post.data.description}
+              </p>
+
+              <div class="flex items-center justify-between">
+                <time class="text-xs" style="color: #64748b;">{dateStr}</time>
+                <span
+                  class="text-xs font-medium flex items-center gap-1 transition-colors duration-150 group-hover:text-amber-400"
+                  style="color: #64748b;"
+                >
+                  Read more
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    ) : (
+      <div class="text-center py-20">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background-color: #1e293b;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5">
+            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+        </div>
+        <p class="text-lg font-semibold mb-1" style="color: #f1f5f9;">No posts yet</p>
+        <p class="text-sm" style="color: #64748b;">Check back soon — articles are on the way.</p>
+      </div>
+    )}
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="rounded-2xl p-8 text-center" style="background: linear-gradient(135deg, #1a2744 0%, #1e293b 100%); border: 1px solid #334155;">
+      <h3 class="text-xl font-bold mb-2" style="color: #f1f5f9;">Prefer audio?</h3>
+      <p class="text-sm mb-6" style="color: #94a3b8;">
+        The podcast is where the real conversations happen. New episodes every week.
+      </p>
+      <a
+        href="/episodes"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-150"
+        style="background-color: #f59e0b; color: #0f172a;"
+        onmouseover="this.style.backgroundColor='#d97706'"
+        onmouseout="this.style.backgroundColor='#f59e0b'"
+      >
+        Browse Episodes
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+</Layout>
