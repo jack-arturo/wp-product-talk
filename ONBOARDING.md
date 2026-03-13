@@ -1,5 +1,12 @@
 # WP Product Talk — CMS Onboarding
 
+## Your Access
+
+**Matt Cromwell** (`@mathetos`) has been invited as a collaborator on the GitHub repo with write access:
+- **Repo:** [github.com/jack-arturo/wp-product-talk](https://github.com/jack-arturo/wp-product-talk)
+- **Permissions:** Push to `main`, create branches, edit content via GitHub UI or Decap CMS
+- **Accept invite:** Check your GitHub notifications or email for the collaboration invite
+
 ## Overview
 
 The site has a built-in CMS (Decap CMS) at `/admin` for managing blog posts and site settings. Episodes are still pulled automatically from your RSS feed at build time — no CMS needed for those.
