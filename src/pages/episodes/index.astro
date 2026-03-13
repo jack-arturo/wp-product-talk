@@ -1,0 +1,110 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import EpisodeCard from '../../components/EpisodeCard.astro';
+import { getEpisodes } from '../../utils/rss.ts';
+
+const episodes = await getEpisodes();
+---
+
+<Layout
+  title="All Episodes · WP Product Talk"
+  description="Browse all WP Product Talk episodes — weekly interviews with experienced WordPress product owners."
+>
+  <!-- Page Header -->
+  <section style="background: linear-gradient(180deg, #0c1220 0%, #0f172a 100%); border-bottom: 1px solid #1e293b;" class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wider mb-2" style="color: #f59e0b;">The Archive</p>
+          <h1 class="text-4xl font-extrabold" style="color: #f1f5f9;">All Episodes</h1>
+          <p class="mt-3 text-base" style="color: #64748b;">
+            {episodes.length > 0 ? (
+              `${episodes.length} episodes and counting — new ones every week.`
+            ) : (
+              'Loading episodes from the feed...'
+            )}
+          </p>
+        </div>
+
+        <!-- Platform links -->
+        <div class="flex items-center gap-3">
+          <a
+            href="https://podcasts.apple.com/us/podcast/wp-product-talk/id1716538393"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-150"
+            style="background-color: #1e293b; color: #94a3b8; border: 1px solid #334155;"
+            onmouseover="this.style.borderColor='#f59e0b'; this.style.color='#f59e0b'"
+            onmouseout="this.style.borderColor='#334155'; this.style.color='#94a3b8'"
+          >
+            Apple Podcasts
+          </a>
+          <a
+            href="https://open.spotify.com/show/5Z8P6FcCekJFAAHAKEl2i3"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-150"
+            style="background-color: #1e293b; color: #94a3b8; border: 1px solid #334155;"
+            onmouseover="this.style.borderColor='#f59e0b'; this.style.color='#f59e0b'"
+            onmouseout="this.style.borderColor='#334155'; this.style.color='#94a3b8'"
+          >
+            Spotify
+          </a>
+          <a
+            href="https://wpproducttalk.com/feed/podcast/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-150"
+            style="background-color: #1e293b; color: #94a3b8; border: 1px solid #334155;"
+            onmouseover="this.style.borderColor='#f59e0b'; this.style.color='#f59e0b'"
+            onmouseout="this.style.borderColor='#334155'; this.style.color='#94a3b8'"
+          >
+            RSS
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Episodes Grid -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {episodes.length > 0 ? (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {episodes.map((episode) => (
+          <EpisodeCard episode={episode} featured={false} />
+        ))}
+      </div>
+    ) : (
+      <!-- Empty state -->
+      <div class="text-center py-24 flex flex-col items-center gap-4">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background-color: #1e293b;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><path d="M9 18V5l12-2v13M9 18a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
+        </div>
+        <div>
+          <p class="text-lg font-semibold mb-1" style="color: #f1f5f9;">Couldn't load episodes</p>
+          <p class="text-sm" style="color: #64748b;">Check back shortly or visit us directly on Apple Podcasts or Spotify.</p>
+        </div>
+        <div class="flex gap-3 mt-2">
+          <a
+            href="https://podcasts.apple.com/us/podcast/wp-product-talk/id1716538393"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-150"
+            style="background-color: #f59e0b; color: #0f172a;"
+          >
+            Apple Podcasts
+          </a>
+          <a
+            href="https://open.spotify.com/show/5Z8P6FcCekJFAAHAKEl2i3"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-150"
+            style="background-color: #1e293b; color: #f1f5f9; border: 1px solid #334155;"
+          >
+            Spotify
+          </a>
+        </div>
+      </div>
+    )}
+  </section>
+</Layout>

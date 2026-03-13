@@ -1,0 +1,213 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Weekly interviews with experienced WordPress product owners on strategies, tips, experiences, failures, and successes.',
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://wpproducttalk.com');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://wpproducttalk.com/wp-content/uploads/WPPT-Podcast-Creative-1.png" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://wpproducttalk.com/wp-content/uploads/WPPT-Podcast-Creative-1.png" />
+  </head>
+
+  <body class="min-h-screen flex flex-col" style="background-color: #0f172a; color: #e2e8f0;">
+    <!-- Header -->
+    <header style="background-color: #0f172a; border-bottom: 1px solid #1e293b;" class="sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo / Site Name -->
+          <a href="/" class="flex items-center gap-3 group">
+            <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #f59e0b;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3C6.48 3 2 7.48 2 13c0 2.85 1.18 5.42 3.07 7.27L3 22l1.73-1.73C6.58 21.82 9.17 23 12 23s5.42-1.18 7.27-3.07L21 21.73 19.27 20C21.82 17.42 23 14.85 23 12c0-5.52-4.48-9-11-9z" fill="#0f172a"/>
+                <circle cx="8.5" cy="13.5" r="1.5" fill="#0f172a"/>
+                <circle cx="12" cy="13.5" r="1.5" fill="#0f172a"/>
+                <circle cx="15.5" cy="13.5" r="1.5" fill="#0f172a"/>
+              </svg>
+            </div>
+            <div>
+              <div class="font-bold text-base leading-tight" style="color: #f1f5f9;">WP Product Talk</div>
+              <div class="text-xs leading-tight hidden sm:block" style="color: #64748b;">For WordPress Product Owners</div>
+            </div>
+          </a>
+
+          <!-- Navigation -->
+          <nav class="flex items-center gap-1">
+            <a
+              href="/"
+              class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
+              style="color: #94a3b8;"
+              onmouseover="this.style.color='#f59e0b'; this.style.backgroundColor='#1e293b'"
+              onmouseout="this.style.color='#94a3b8'; this.style.backgroundColor='transparent'"
+            >
+              Home
+            </a>
+            <a
+              href="/episodes"
+              class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
+              style="color: #94a3b8;"
+              onmouseover="this.style.color='#f59e0b'; this.style.backgroundColor='#1e293b'"
+              onmouseout="this.style.color='#94a3b8'; this.style.backgroundColor='transparent'"
+            >
+              Episodes
+            </a>
+            <a
+              href="/about"
+              class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
+              style="color: #94a3b8;"
+              onmouseover="this.style.color='#f59e0b'; this.style.backgroundColor='#1e293b'"
+              onmouseout="this.style.color='#94a3b8'; this.style.backgroundColor='transparent'"
+            >
+              About
+            </a>
+            <a
+              href="https://podcasts.apple.com/us/podcast/wp-product-talk/id1716538393"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ml-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-150"
+              style="background-color: #f59e0b; color: #0f172a;"
+              onmouseover="this.style.backgroundColor='#d97706'"
+              onmouseout="this.style.backgroundColor='#f59e0b'"
+            >
+              Listen Now
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer style="background-color: #020617; border-top: 1px solid #1e293b;" class="mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Brand -->
+          <div class="md:col-span-1">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #f59e0b;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 3C6.48 3 2 7.48 2 13c0 2.85 1.18 5.42 3.07 7.27L3 22l1.73-1.73C6.58 21.82 9.17 23 12 23s5.42-1.18 7.27-3.07L21 21.73 19.27 20C21.82 17.42 23 14.85 23 12c0-5.52-4.48-9-11-9z" fill="#0f172a"/>
+                  <circle cx="8.5" cy="13.5" r="1.5" fill="#0f172a"/>
+                  <circle cx="12" cy="13.5" r="1.5" fill="#0f172a"/>
+                  <circle cx="15.5" cy="13.5" r="1.5" fill="#0f172a"/>
+                </svg>
+              </div>
+              <span class="font-bold text-base" style="color: #f1f5f9;">WP Product Talk</span>
+            </div>
+            <p class="text-sm leading-relaxed" style="color: #64748b;">
+              A WordPress podcast for Product Owners, by WordPress Product Owners.
+            </p>
+          </div>
+
+          <!-- Listen On -->
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: #f59e0b;">Listen On</h3>
+            <ul class="space-y-3">
+              <li>
+                <a
+                  href="https://podcasts.apple.com/us/podcast/wp-product-talk/id1716538393"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 text-sm transition-colors duration-150"
+                  style="color: #94a3b8;"
+                  onmouseover="this.style.color='#f59e0b'"
+                  onmouseout="this.style.color='#94a3b8'"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 6.628 5.374 12 12 12 6.628 0 12-5.372 12-12 0-6.627-5.372-12-12-12zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10S2 17.514 2 12 6.486 2 12 2zm0 3c-1.38 0-2.5 1.12-2.5 2.5S10.62 10 12 10s2.5-1.12 2.5-2.5S13.38 5 12 5zm0 6.5c-3.038 0-5.5 2.462-5.5 5.5H8c0-2.206 1.794-4 4-4s4 1.794 4 4h1.5c0-3.038-2.462-5.5-5.5-5.5z"/></svg>
+                  Apple Podcasts
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://open.spotify.com/show/5Z8P6FcCekJFAAHAKEl2i3"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 text-sm transition-colors duration-150"
+                  style="color: #94a3b8;"
+                  onmouseover="this.style.color='#f59e0b'"
+                  onmouseout="this.style.color='#94a3b8'"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                  Spotify
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://wpproducttalk.com/feed/podcast/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 text-sm transition-colors duration-150"
+                  style="color: #94a3b8;"
+                  onmouseover="this.style.color='#f59e0b'"
+                  onmouseout="this.style.color='#94a3b8'"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
+                  RSS Feed
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: #f59e0b;">Navigation</h3>
+            <ul class="space-y-3">
+              <li>
+                <a href="/" class="text-sm transition-colors duration-150" style="color: #94a3b8;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#94a3b8'">Home</a>
+              </li>
+              <li>
+                <a href="/episodes" class="text-sm transition-colors duration-150" style="color: #94a3b8;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#94a3b8'">Episodes</a>
+              </li>
+              <li>
+                <a href="/about" class="text-sm transition-colors duration-150" style="color: #94a3b8;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#94a3b8'">About</a>
+              </li>
+              <li>
+                <a href="mailto:matt@wpproducttalk.com" class="text-sm transition-colors duration-150" style="color: #94a3b8;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#94a3b8'">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4" style="border-top: 1px solid #1e293b;">
+          <p class="text-xs" style="color: #475569;">&copy; {new Date().getFullYear()} WP Product Talk. All rights reserved.</p>
+          <p class="text-xs" style="color: #475569;">A podcast for WordPress product owners, builders &amp; makers.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

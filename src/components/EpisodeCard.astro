@@ -1,0 +1,121 @@
+---
+import type { Episode } from '../utils/rss.ts';
+import { formatDate, formatDuration, stripHtml } from '../utils/rss.ts';
+
+interface Props {
+  episode: Episode;
+  featured?: boolean;
+}
+
+const { episode, featured = false } = Astro.props;
+
+const displayDate = formatDate(episode.pubDate);
+const displayDuration = formatDuration(episode.duration);
+const shortDesc = stripHtml(episode.description, featured ? 280 : 160);
+const imgSrc = episode.imageUrl || 'https://wpproducttalk.com/wp-content/uploads/WPPT-Podcast-Creative-1.png';
+---
+
+{featured ? (
+  <!-- Featured layout: image left, content right -->
+  <a
+    href={episode.link}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="group flex flex-col sm:flex-row rounded-2xl overflow-hidden transition-all duration-200 h-full"
+    style="background-color: #1e293b; border: 1px solid #334155;"
+    onmouseover="this.style.borderColor='#f59e0b'; this.style.boxShadow='0 0 0 1px #f59e0b20, 0 8px 32px rgba(245,158,11,0.08)'"
+    onmouseout="this.style.borderColor='#334155'; this.style.boxShadow='none'"
+  >
+    <!-- Image -->
+    <div class="sm:w-48 flex-shrink-0 overflow-hidden" style="background-color: #0f172a;">
+      <img
+        src={imgSrc}
+        alt={episode.title}
+        class="w-full h-48 sm:h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-col justify-between p-6 flex-1">
+      <div>
+        <!-- Meta badges -->
+        <div class="flex items-center gap-2 mb-3 flex-wrap">
+          <span class="text-xs font-medium px-2 py-1 rounded-full" style="background-color: #f59e0b20; color: #f59e0b;">
+            Featured
+          </span>
+          {displayDuration && (
+            <span class="text-xs font-medium px-2 py-1 rounded-full" style="background-color: #1e293b; color: #64748b; border: 1px solid #334155;">
+              {displayDuration}
+            </span>
+          )}
+        </div>
+
+        <!-- Title -->
+        <h3
+          class="font-bold text-lg leading-snug mb-3 transition-colors duration-150 group-hover:text-amber-400"
+          style="color: #f1f5f9;"
+        >
+          {episode.title}
+        </h3>
+
+        <!-- Description -->
+        <p class="text-sm leading-relaxed" style="color: #94a3b8;">{shortDesc}</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="flex items-center justify-between mt-5 pt-4" style="border-top: 1px solid #334155;">
+        <time class="text-xs" style="color: #64748b;">{displayDate}</time>
+        <span class="text-xs font-medium flex items-center gap-1 transition-colors duration-150 group-hover:text-amber-400" style="color: #64748b;">
+          Listen
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+  </a>
+) : (
+  <!-- Regular layout: image top, content below -->
+  <a
+    href={episode.link}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="group flex flex-col rounded-xl overflow-hidden transition-all duration-200 h-full"
+    style="background-color: #1e293b; border: 1px solid #334155;"
+    onmouseover="this.style.borderColor='#f59e0b'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 32px rgba(0,0,0,0.3)'"
+    onmouseout="this.style.borderColor='#334155'; this.style.transform='translateY(0)'; this.style.boxShadow='none'"
+  >
+    <!-- Image -->
+    <div class="relative overflow-hidden" style="background-color: #0f172a; aspect-ratio: 16/9;">
+      <img
+        src={imgSrc}
+        alt={episode.title}
+        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        loading="lazy"
+      />
+      {displayDuration && (
+        <span
+          class="absolute bottom-2 right-2 text-xs font-semibold px-2 py-1 rounded-md"
+          style="background-color: rgba(15,23,42,0.85); color: #f59e0b; backdrop-filter: blur(4px);"
+        >
+          {displayDuration}
+        </span>
+      )}
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-col flex-1 p-5">
+      <h3
+        class="font-semibold text-base leading-snug mb-2 transition-colors duration-150 group-hover:text-amber-400"
+        style="color: #f1f5f9;"
+      >
+        {episode.title}
+      </h3>
+      <p class="text-sm leading-relaxed flex-1 mb-4" style="color: #94a3b8; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{shortDesc}</p>
+
+      <!-- Date -->
+      <time class="text-xs" style="color: #64748b;">{displayDate}</time>
+    </div>
+  </a>
+)}

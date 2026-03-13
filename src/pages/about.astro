@@ -1,0 +1,251 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HostCard from '../components/HostCard.astro';
+
+const hosts = [
+  {
+    name: 'Matt Cromwell',
+    role: 'Co-host',
+    bio: 'WordPress product builder and entrepreneur with deep experience shipping plugins and tools that help WP-powered businesses grow. Matt brings strategic thinking and honest insight to every conversation.',
+    initials: 'MC',
+    email: 'matt@wpproducttalk.com',
+  },
+  {
+    name: 'Katie Keith',
+    role: 'Co-host',
+    bio: 'CEO of Barn2 Plugins. Katie builds premium WordPress plugins and has navigated the full journey from side project to successful product business. She brings a data-driven, customer-centric perspective.',
+    initials: 'KK',
+  },
+  {
+    name: 'Zack Katz',
+    role: 'Co-host',
+    bio: 'Founder of GravityKit, a suite of products that extend Gravity Forms for business use. Zack has grown a thriving product ecosystem and loves digging into the numbers behind sustainable SaaS growth.',
+    initials: 'ZK',
+  },
+  {
+    name: 'Amber Hinds',
+    role: 'Co-host',
+    bio: 'CEO of Equalize Digital, building WordPress accessibility tools and championing inclusive design across the web. Amber brings a mission-driven perspective to the craft of building WordPress products.',
+    initials: 'AH',
+  },
+];
+---
+
+<Layout
+  title="About · WP Product Talk"
+  description="Learn about WP Product Talk, the weekly podcast for WordPress product owners hosted by Matt Cromwell, Katie Keith, Zack Katz, and Amber Hinds."
+>
+  <!-- Hero -->
+  <section style="background: linear-gradient(180deg, #0c1220 0%, #0f172a 100%); border-bottom: 1px solid #1e293b;" class="py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: #f59e0b;">About the Show</p>
+      <h1 class="text-4xl sm:text-5xl font-extrabold mb-6" style="color: #f1f5f9;">
+        About WP Product Talk
+      </h1>
+      <p class="text-xl leading-relaxed" style="color: #94a3b8;">
+        The podcast where WordPress product owners talk openly about what it takes to build, grow, and sustain a thriving WP product business.
+      </p>
+    </div>
+  </section>
+
+  <!-- Mission / Description -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <!-- Podcast art -->
+      <div class="flex justify-center lg:justify-start">
+        <div class="relative">
+          <div class="absolute inset-0 rounded-3xl opacity-30" style="background: radial-gradient(circle at 50% 50%, #f59e0b, transparent 70%); transform: scale(1.1);"></div>
+          <img
+            src="https://wpproducttalk.com/wp-content/uploads/WPPT-Podcast-Creative-1.png"
+            alt="WP Product Talk Podcast"
+            class="relative w-72 h-72 sm:w-80 sm:h-80 rounded-3xl object-cover"
+            style="border: 2px solid #334155; box-shadow: 0 24px 64px rgba(0,0,0,0.5);"
+          />
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div>
+        <h2 class="text-3xl font-bold mb-6" style="color: #f1f5f9;">Our Mission</h2>
+        <div class="space-y-4" style="color: #94a3b8;">
+          <p class="text-base leading-relaxed">
+            WP Product Talk is a weekly podcast dedicated to the people building and running WordPress product businesses. Every week, we sit down with experienced product owners to dig into what's actually working — and what isn't.
+          </p>
+          <p class="text-base leading-relaxed">
+            We cover strategies for growth, pricing decisions, customer support at scale, navigating the WordPress ecosystem, building teams, managing burn-out, and everything in between.
+          </p>
+          <p class="text-base leading-relaxed">
+            This is a show by product owners, for product owners. No fluff. No generic startup advice. Just real conversations with people who've been in the trenches.
+          </p>
+        </div>
+
+        <!-- Key stats -->
+        <div class="grid grid-cols-3 gap-4 mt-8 pt-8" style="border-top: 1px solid #1e293b;">
+          <div class="text-center">
+            <div class="text-2xl font-extrabold" style="color: #f59e0b;">8,000+</div>
+            <div class="text-xs mt-1" style="color: #64748b;">Listeners</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-extrabold" style="color: #f59e0b;">125+</div>
+            <div class="text-xs mt-1" style="color: #64748b;">Episodes</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-extrabold" style="color: #f59e0b;">Weekly</div>
+            <div class="text-xs mt-1" style="color: #64748b;">Cadence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hosts Section -->
+  <section style="background-color: #0c1220; border-top: 1px solid #1e293b; border-bottom: 1px solid #1e293b;" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <p class="text-sm font-semibold uppercase tracking-wider mb-2" style="color: #f59e0b;">The Team</p>
+        <h2 class="text-3xl font-bold" style="color: #f1f5f9;">Meet your hosts</h2>
+        <p class="mt-4 text-base max-w-xl mx-auto" style="color: #64748b;">
+          Four active WordPress product owners who understand the challenges you face — because they face them too.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {hosts.map((host) => (
+          <HostCard
+            name={host.name}
+            role={host.role}
+            bio={host.bio}
+            initials={host.initials}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Listen -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Subscribe -->
+      <div>
+        <h2 class="text-2xl font-bold mb-6" style="color: #f1f5f9;">How to Listen</h2>
+        <p class="text-base leading-relaxed mb-8" style="color: #94a3b8;">
+          New episodes drop every week. Subscribe on your favorite platform so you never miss a conversation.
+        </p>
+
+        <div class="space-y-4">
+          <a
+            href="https://podcasts.apple.com/us/podcast/wp-product-talk/id1716538393"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-4 p-4 rounded-xl transition-all duration-200"
+            style="background-color: #1e293b; border: 1px solid #334155;"
+            onmouseover="this.style.borderColor='#f59e0b'"
+            onmouseout="this.style.borderColor='#334155'"
+          >
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #8b5cf620;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#a855f7"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold text-sm" style="color: #f1f5f9;">Apple Podcasts</div>
+              <div class="text-xs mt-0.5" style="color: #64748b;">Subscribe on iPhone, iPad, Mac</div>
+            </div>
+            <svg class="ml-auto" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <a
+            href="https://open.spotify.com/show/5Z8P6FcCekJFAAHAKEl2i3"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-4 p-4 rounded-xl transition-all duration-200"
+            style="background-color: #1e293b; border: 1px solid #334155;"
+            onmouseover="this.style.borderColor='#f59e0b'"
+            onmouseout="this.style.borderColor='#334155'"
+          >
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #1db95420;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#1db954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold text-sm" style="color: #f1f5f9;">Spotify</div>
+              <div class="text-xs mt-0.5" style="color: #64748b;">Stream or download episodes</div>
+            </div>
+            <svg class="ml-auto" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <a
+            href="https://wpproducttalk.com/feed/podcast/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-4 p-4 rounded-xl transition-all duration-200"
+            style="background-color: #1e293b; border: 1px solid #334155;"
+            onmouseover="this.style.borderColor='#f59e0b'"
+            onmouseout="this.style.borderColor='#334155'"
+          >
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #f59e0b20;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#f59e0b"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
+            </div>
+            <div>
+              <div class="font-semibold text-sm" style="color: #f1f5f9;">RSS Feed</div>
+              <div class="text-xs mt-0.5" style="color: #64748b;">Add to any podcast app</div>
+            </div>
+            <svg class="ml-auto" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h2 class="text-2xl font-bold mb-6" style="color: #f1f5f9;">Get in Touch</h2>
+        <p class="text-base leading-relaxed mb-6" style="color: #94a3b8;">
+          Have a suggestion for a guest? Want to sponsor the show? Building something you'd like to share with the WP Product Talk community? We'd love to hear from you.
+        </p>
+
+        <!-- Contact card -->
+        <div class="p-6 rounded-2xl mb-6" style="background-color: #1e293b; border: 1px solid #334155;">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style="background: linear-gradient(135deg, #1e3a5f, #1e293b); border: 2px solid #f59e0b; color: #f59e0b;">
+              MC
+            </div>
+            <div>
+              <div class="font-semibold text-sm" style="color: #f1f5f9;">Matt Cromwell</div>
+              <div class="text-xs" style="color: #64748b;">Co-host &amp; Producer</div>
+            </div>
+          </div>
+
+          <a
+            href="mailto:matt@wpproducttalk.com"
+            class="inline-flex items-center gap-2 w-full justify-center py-3 rounded-xl text-sm font-semibold transition-all duration-150"
+            style="background-color: #f59e0b; color: #0f172a;"
+            onmouseover="this.style.backgroundColor='#d97706'"
+            onmouseout="this.style.backgroundColor='#f59e0b'"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            matt@wpproducttalk.com
+          </a>
+        </div>
+
+        <!-- What to include -->
+        <div class="p-5 rounded-xl" style="background-color: #0f172a; border: 1px solid #1e293b;">
+          <h3 class="text-sm font-semibold mb-3" style="color: #f59e0b;">When reaching out, include:</h3>
+          <ul class="space-y-2">
+            {[
+              'Your name and WordPress product',
+              'What you\'d like to talk about',
+              'Any relevant links or context',
+              'Your availability for recording',
+            ].map((item) => (
+              <li class="flex items-start gap-2 text-sm" style="color: #94a3b8;">
+                <svg class="flex-shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

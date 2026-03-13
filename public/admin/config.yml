@@ -1,0 +1,33 @@
+backend:
+  name: github
+  repo: jack-arturo/wp-product-talk
+  branch: main
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: blog
+    label: Blog Posts
+    folder: src/content/blog
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Publish Date, name: date, widget: datetime }
+      - { label: Author, name: author, widget: string }
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Body, name: body, widget: markdown }
+      - { label: Featured Image, name: image, widget: image, required: false }
+
+  - name: settings
+    label: Site Settings
+    files:
+      - label: General Settings
+        name: general
+        file: src/content/settings/general.json
+        fields:
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: About Text, name: about, widget: text }
+          - { label: Twitter URL, name: twitter, widget: string, required: false }
+          - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
