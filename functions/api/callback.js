@@ -37,19 +37,32 @@ export async function onRequestGet(context) {
   const token = tokenData.access_token;
   const provider = 'github';
 
+  if (!token) {
+    return new Response(
+      `Token exchange returned no access_token. Response: ${JSON.stringify(tokenData)}`,
+      { status: 502 }
+    );
+  }
+
   return new Response(
     `<!DOCTYPE html>
 <html><head><title>Authorizing...</title></head>
 <body>
+<p id="status">Completing authorization...</p>
 <script>
 (function() {
-  var data = { token: '${token}', provider: '${provider}' };
-  var msg = 'authorization:${provider}:success:' + JSON.stringify(data);
+  var token = ${JSON.stringify(token)};
+  var provider = ${JSON.stringify(provider)};
+  var data = { token: token, provider: provider };
+  var msg = 'authorization:' + provider + ':success:' + JSON.stringify(data);
+  var status = document.getElementById('status');
+
   if (window.opener) {
     window.opener.postMessage(msg, '*');
-    setTimeout(function() { window.close(); }, 1000);
+    status.textContent = 'Token sent. Closing in 5s...';
+    setTimeout(function() { window.close(); }, 5000);
   } else {
-    document.body.innerText = 'Authorization successful. You can close this window.';
+    status.textContent = 'No opener window found. Copy token manually: ' + token.substring(0, 8) + '...';
   }
 })();
 </script>
