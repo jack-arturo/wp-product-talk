@@ -2,6 +2,7 @@ backend:
   name: github
   repo: jack-arturo/wp-product-talk
   branch: main
+  auth_type: pkce
 
 media_folder: public/images/uploads
 public_folder: /images/uploads
@@ -30,3 +31,4 @@ collections:
           - {label: "About Text", name: "about", widget: "markdown"}
           - {label: "Twitter URL", name: "twitter", widget: "string", required: false}
           - {label: "YouTube URL", name: "youtube", widget: "string", required: false}
+
