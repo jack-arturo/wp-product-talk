@@ -7,6 +7,7 @@ export interface Episode {
   imageUrl: string;
   enclosureUrl: string;
   guid: string;
+  categories: string[];
 }
 
 function extractTagContent(xml: string, tag: string): string {
@@ -27,18 +28,25 @@ export async function getEpisodes(): Promise<Episode[]> {
     // Split into items
     const items = xml.split('<item>').slice(1);
 
-    return items.map(item => ({
-      title: extractTagContent(item, 'title'),
-      link: extractTagContent(item, 'link'),
-      pubDate: extractTagContent(item, 'pubDate'),
-      description: extractTagContent(item, 'description'),
-      duration: extractTagContent(item, 'itunes:duration'),
-      imageUrl:
-        extractAttr(item, 'itunes:image', 'href') ||
-        'https://wpproducttalk.com/wp-content/uploads/WPPT-Podcast-Creative-1.png',
-      enclosureUrl: extractAttr(item, 'enclosure', 'url'),
-      guid: extractTagContent(item, 'guid'),
-    }));
+    return items.map(item => {
+      const categories = [
+        ...item.matchAll(/<category><!\[CDATA\[(.*?)\]\]><\/category>/g),
+      ].map(m => m[1]);
+
+      return {
+        title: extractTagContent(item, 'title'),
+        link: extractTagContent(item, 'link'),
+        pubDate: extractTagContent(item, 'pubDate'),
+        description: extractTagContent(item, 'description'),
+        duration: extractTagContent(item, 'itunes:duration'),
+        imageUrl:
+          extractAttr(item, 'itunes:image', 'href') ||
+          'https://wpproducttalk.com/wp-content/uploads/WPPT-Podcast-Creative-1.png',
+        enclosureUrl: extractAttr(item, 'enclosure', 'url'),
+        guid: extractTagContent(item, 'guid'),
+        categories,
+      };
+    });
   } catch (e) {
     console.error('RSS fetch failed:', e);
     return [];

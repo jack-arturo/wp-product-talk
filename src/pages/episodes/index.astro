@@ -4,6 +4,7 @@ import EpisodeCard from '../../components/EpisodeCard.astro';
 import { getEpisodes } from '../../utils/rss.ts';
 
 const episodes = await getEpisodes();
+const allCategories = [...new Set(episodes.flatMap((ep) => ep.categories))].sort();
 ---
 
 <Layout
@@ -26,7 +27,6 @@ const episodes = await getEpisodes();
           </p>
         </div>
 
-        <!-- Platform links -->
         <div class="flex items-center gap-3">
           <a
             href="https://podcasts.apple.com/us/podcast/wp-product-talk/id1716538393"
@@ -66,16 +66,61 @@ const episodes = await getEpisodes();
     </div>
   </section>
 
+  <!-- Filter Controls -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+      <input
+        id="search-input"
+        type="search"
+        placeholder="Search episodes..."
+        class="flex-1 rounded-lg px-4 py-2.5 text-sm focus:outline-none transition-colors"
+        style="background-color: #1e293b; border: 1px solid #334155; color: #f1f5f9;"
+        onfocus="this.style.borderColor='#f59e0b'"
+        onblur="this.style.borderColor='#334155'"
+      />
+
+      <select
+        id="topic-filter"
+        class="rounded-lg px-4 py-2.5 text-sm focus:outline-none transition-colors min-w-[180px]"
+        style="background-color: #1e293b; border: 1px solid #334155; color: #f1f5f9;"
+      >
+        <option value="">All Topics</option>
+        {allCategories.map((cat) => (
+          <option value={cat}>{cat}</option>
+        ))}
+      </select>
+
+      <select
+        id="sort-filter"
+        class="rounded-lg px-4 py-2.5 text-sm focus:outline-none transition-colors"
+        style="background-color: #1e293b; border: 1px solid #334155; color: #f1f5f9;"
+      >
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+      </select>
+
+      <span id="result-count" class="text-sm whitespace-nowrap" style="color: #64748b;">
+        {episodes.length} episodes
+      </span>
+    </div>
+  </section>
+
   <!-- Episodes Grid -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     {episodes.length > 0 ? (
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div id="episode-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {episodes.map((episode) => (
-          <EpisodeCard episode={episode} featured={false} />
+          <div
+            class="episode-item"
+            data-categories={JSON.stringify(episode.categories)}
+            data-date={episode.pubDate}
+            data-title={episode.title.toLowerCase()}
+          >
+            <EpisodeCard episode={episode} featured={false} />
+          </div>
         ))}
       </div>
     ) : (
-      <!-- Empty state -->
       <div class="text-center py-24 flex flex-col items-center gap-4">
         <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background-color: #1e293b;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><path d="M9 18V5l12-2v13M9 18a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
@@ -84,27 +129,85 @@ const episodes = await getEpisodes();
           <p class="text-lg font-semibold mb-1" style="color: #f1f5f9;">Couldn't load episodes</p>
           <p class="text-sm" style="color: #64748b;">Check back shortly or visit us directly on Apple Podcasts or Spotify.</p>
         </div>
-        <div class="flex gap-3 mt-2">
-          <a
-            href="https://podcasts.apple.com/us/podcast/wp-product-talk/id1716538393"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-150"
-            style="background-color: #f59e0b; color: #0f172a;"
-          >
-            Apple Podcasts
-          </a>
-          <a
-            href="https://open.spotify.com/show/5Z8P6FcCekJFAAHAKEl2i3"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-150"
-            style="background-color: #1e293b; color: #f1f5f9; border: 1px solid #334155;"
-          >
-            Spotify
-          </a>
-        </div>
       </div>
     )}
+
+    <!-- Empty state for filters -->
+    <div id="empty-state" class="hidden text-center py-16">
+      <svg class="w-12 h-12 mx-auto mb-4 opacity-30" fill="none" stroke="#64748b" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <p class="text-lg font-medium mb-2" style="color: #94a3b8;">No episodes match your filters.</p>
+      <button
+        id="clear-filters"
+        class="text-sm font-medium transition-colors"
+        style="color: #f59e0b;"
+        onmouseover="this.style.color='#d97706'"
+        onmouseout="this.style.color='#f59e0b'"
+      >
+        Clear filters
+      </button>
+    </div>
   </section>
 </Layout>
+
+<script>
+  const grid = document.getElementById('episode-grid') as HTMLElement;
+  if (grid) {
+    const items = [...grid.querySelectorAll<HTMLElement>('.episode-item')];
+    const emptyState = document.getElementById('empty-state') as HTMLElement;
+    const resultCount = document.getElementById('result-count') as HTMLElement;
+    const topicSelect = document.getElementById('topic-filter') as HTMLSelectElement;
+    const sortSelect = document.getElementById('sort-filter') as HTMLSelectElement;
+    const searchInput = document.getElementById('search-input') as HTMLInputElement;
+    const clearBtn = document.getElementById('clear-filters') as HTMLButtonElement;
+
+    function filterEpisodes() {
+      const topic = topicSelect.value;
+      const sort = sortSelect.value;
+      const search = searchInput.value.toLowerCase().trim();
+
+      const filtered = items.filter((item) => {
+        const cats: string[] = JSON.parse(item.dataset.categories || '[]');
+        const title = item.dataset.title || '';
+        const matchesTopic = !topic || cats.some((c) => c.toLowerCase() === topic.toLowerCase());
+        const matchesSearch = !search || title.includes(search);
+        return matchesTopic && matchesSearch;
+      });
+
+      filtered.sort((a, b) => {
+        const da = new Date(a.dataset.date || '').getTime();
+        const db = new Date(b.dataset.date || '').getTime();
+        return sort === 'oldest' ? da - db : db - da;
+      });
+
+      items.forEach((item) => { item.style.display = 'none'; });
+      filtered.forEach((item) => {
+        item.style.display = '';
+        grid.appendChild(item);
+      });
+
+      resultCount.textContent = `${filtered.length} episode${filtered.length !== 1 ? 's' : ''}`;
+      emptyState.classList.toggle('hidden', filtered.length > 0);
+      grid.classList.toggle('hidden', filtered.length === 0);
+    }
+
+    function clearFilters() {
+      topicSelect.value = '';
+      sortSelect.value = 'newest';
+      searchInput.value = '';
+      filterEpisodes();
+    }
+
+    topicSelect.addEventListener('change', filterEpisodes);
+    sortSelect.addEventListener('change', filterEpisodes);
+    searchInput.addEventListener('input', filterEpisodes);
+    clearBtn.addEventListener('click', clearFilters);
+
+    const urlTopic = new URLSearchParams(window.location.search).get('topic');
+    if (urlTopic) {
+      topicSelect.value = urlTopic;
+      filterEpisodes();
+    }
+  }
+</script>

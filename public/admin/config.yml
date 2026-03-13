@@ -3,6 +3,7 @@ backend:
   repo: jack-arturo/wp-product-talk
   branch: main
   auth_type: pkce
+  app_id: Iv23lidHnBiLgTXVi7F5
 
 media_folder: public/images/uploads
 public_folder: /images/uploads
