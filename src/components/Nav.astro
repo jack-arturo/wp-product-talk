@@ -1,0 +1,67 @@
+---
+// Navigation component for WP Product Talk
+---
+
+<header class="sticky top-0 z-50" style="background-color: #0f172a; border-bottom: 1px solid #1e293b;">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo / Site Name -->
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #f59e0b;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3C6.48 3 2 7.48 2 13c0 2.85 1.18 5.42 3.07 7.27L3 22l1.73-1.73C6.58 21.82 9.17 23 12 23s5.42-1.18 7.27-3.07L21 21.73 19.27 20C21.82 17.42 23 14.85 23 12c0-5.52-4.48-9-11-9z" fill="#0f172a"/>
+            <circle cx="8.5" cy="13.5" r="1.5" fill="#0f172a"/>
+            <circle cx="12" cy="13.5" r="1.5" fill="#0f172a"/>
+            <circle cx="15.5" cy="13.5" r="1.5" fill="#0f172a"/>
+          </svg>
+        </div>
+        <div>
+          <div class="font-bold text-base leading-tight" style="color: #f1f5f9;">WP Product Talk</div>
+          <div class="text-xs leading-tight hidden sm:block" style="color: #64748b;">For WordPress Product Owners</div>
+        </div>
+      </a>
+
+      <!-- Navigation -->
+      <nav class="flex items-center gap-1">
+        <a
+          href="/"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
+          style="color: #94a3b8;"
+          onmouseover="this.style.color='#f59e0b'; this.style.backgroundColor='#1e293b'"
+          onmouseout="this.style.color='#94a3b8'; this.style.backgroundColor='transparent'"
+        >
+          Home
+        </a>
+        <a
+          href="/episodes"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
+          style="color: #94a3b8;"
+          onmouseover="this.style.color='#f59e0b'; this.style.backgroundColor='#1e293b'"
+          onmouseout="this.style.color='#94a3b8'; this.style.backgroundColor='transparent'"
+        >
+          Episodes
+        </a>
+        <a
+          href="/about"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
+          style="color: #94a3b8;"
+          onmouseover="this.style.color='#f59e0b'; this.style.backgroundColor='#1e293b'"
+          onmouseout="this.style.color='#94a3b8'; this.style.backgroundColor='transparent'"
+        >
+          About
+        </a>
+        <a
+          href="https://podcasts.apple.com/us/podcast/wp-product-talk/id1716538393"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ml-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-150"
+          style="background-color: #f59e0b; color: #0f172a;"
+          onmouseover="this.style.backgroundColor='#d97706'"
+          onmouseout="this.style.backgroundColor='#f59e0b'"
+        >
+          Listen Now
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
