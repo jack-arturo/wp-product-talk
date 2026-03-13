@@ -43,15 +43,14 @@ export async function onRequestGet(context) {
 <body>
 <script>
 (function() {
-  function sendMsg(msg) {
-    var target = window.opener || window.parent;
-    target.postMessage(
-      'authorization:${provider}:success:' + JSON.stringify(msg),
-      document.referrer || window.location.origin
-    );
+  var data = { token: '${token}', provider: '${provider}' };
+  var msg = 'authorization:${provider}:success:' + JSON.stringify(data);
+  if (window.opener) {
+    window.opener.postMessage(msg, '*');
+    setTimeout(function() { window.close(); }, 1000);
+  } else {
+    document.body.innerText = 'Authorization successful. You can close this window.';
   }
-  sendMsg({ token: '${token}', provider: '${provider}' });
-  setTimeout(function() { window.close(); }, 500);
 })();
 </script>
 </body></html>`,
