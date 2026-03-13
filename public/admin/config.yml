@@ -2,8 +2,8 @@ backend:
   name: github
   repo: jack-arturo/wp-product-talk
   branch: main
-  auth_type: pkce
-  app_id: Iv23lidHnBiLgTXVi7F5
+  base_url: https://wp-product-talk.pages.dev
+  auth_endpoint: /api/auth
 
 media_folder: public/images/uploads
 public_folder: /images/uploads
