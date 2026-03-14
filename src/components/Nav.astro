@@ -8,9 +8,11 @@
       <!-- Logo / Site Name -->
       <a href="/" class="flex items-center gap-3 group">
         <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #f59e0b;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="#0f172a" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+          <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3C6.48 3 2 7.48 2 13c0 2.85 1.18 5.42 3.07 7.27L3 22l1.73-1.73C6.58 21.82 9.17 23 12 23s5.42-1.18 7.27-3.07L21 21.73 19.27 20C21.82 17.42 23 14.85 23 12c0-5.52-4.48-9-11-9z" fill="#0f172a"/>
+            <circle cx="8.5" cy="13.5" r="1.5" fill="#0f172a"/>
+            <circle cx="12" cy="13.5" r="1.5" fill="#0f172a"/>
+            <circle cx="15.5" cy="13.5" r="1.5" fill="#0f172a"/>
           </svg>
         </div>
         <div>
@@ -19,8 +21,8 @@
         </div>
       </a>
 
-      <!-- Navigation -->
-      <nav class="flex items-center gap-1">
+      <!-- Desktop Navigation -->
+      <nav class="hidden sm:flex items-center gap-1">
         <a
           href="/"
           class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
@@ -69,6 +71,59 @@
           Listen Now
         </a>
       </nav>
+
+      <!-- Mobile Hamburger Button -->
+      <button
+        id="mobile-menu-btn"
+        class="sm:hidden p-2 rounded-lg"
+        style="color: #94a3b8;"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <svg id="icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg id="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden sm:hidden" style="background-color: #0f172a; border-top: 1px solid #1e293b;">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
+      <a href="/" class="px-4 py-2 rounded-lg text-sm font-medium" style="color: #94a3b8;">Home</a>
+      <a href="/episodes" class="px-4 py-2 rounded-lg text-sm font-medium" style="color: #94a3b8;">Episodes</a>
+      <a href="/about" class="px-4 py-2 rounded-lg text-sm font-medium" style="color: #94a3b8;">About</a>
+      <a href="/blog" class="px-4 py-2 rounded-lg text-sm font-medium" style="color: #94a3b8;">Blog</a>
+      <a
+        href="https://podcasts.apple.com/us/podcast/wp-product-talk/id1716538393"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-1 px-4 py-2 rounded-lg text-sm font-semibold text-center"
+        style="background-color: #f59e0b; color: #0f172a;"
+      >
+        Listen Now
+      </a>
     </div>
   </div>
 </header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden', isOpen);
+    iconOpen?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+    btn?.setAttribute('aria-expanded', String(!isOpen));
+  });
+</script>
